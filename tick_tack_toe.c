@@ -94,7 +94,11 @@ int main (void)
         }
 
         //display winner
-        printf("The Winner is Player %d\n",winner);
+        if (winner == 0){
+            printf("There is no Winner\n");
+        } else {
+            printf("The Winner is Player %d\n",winner);
+        }
 
         //display final bord
         for (i = 6 ; i > -1 ; i = i-3){
