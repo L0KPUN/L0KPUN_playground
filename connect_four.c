@@ -1,32 +1,24 @@
 #include <stdio.h>
+#include <string.h>
 
-//📀
-//💿
+//🔴
+//🔵
+//💣
+//🕤🕘🕒🕞
 
-int i = 0;
-
-int turn = 0;
-int with = 9;
-int hight = 7;
+int turn = 1; //starts with the first turn
 int input = 0;
 
-#define ZEILEN 6
-#define SPALTEN 7
+#define rows 6
+#define columns 7
 
-char bord[ZEILEN][SPALTEN] = {
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-    {' ', ' ', ' ', ' ', ' ', ' ', ' '}
-};
+char bord[rows][columns];
 
 void print_bord()
 {
     printf("\n");
-    for (int i = 0; i < ZEILEN; i++) {
-        for (int j = 0; j < SPALTEN; j++) {
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < columns; j++) {
             printf("| %c ", bord[i][j]);
         }
         printf("|\n");
@@ -34,32 +26,46 @@ void print_bord()
     printf("  1   2   3   4   5   6   7  ");
 }
 
-void place(int a,int b,int c)
+void place(int column,char c)
 {
-    bord[a][b] = c;
+    int row = rows;
+    while (1){
+        if (bord[row][column] == ' '){
+            break;
+        }
+        row--;
+    }
+    bord[row][column] = c;
 }
 
 void paragraph(int count)
 {
-    for (i = 0 ; i < count ; i++){
+    for (int i = 0 ; i < count ; i++){
         printf("\n");
     }
 }
 
 void main()
-{
-    print_bord();
-    paragraph(2);
+{   
+    memset(bord, ' ', sizeof(bord));
+    while (turn < rows * columns + 2)
+    {
+        print_bord();
+        paragraph(2);
 
-    int turn =+ 1;
-    printf("Turn: %d\n",turn);
+        printf("Turn: %d\n",turn);
 
-    if (turn % 2 != 0){ //player1
-        printf("Payer 1: ");
-        scanf("%ls",&input);
-    } else { //player 2
+        if (turn % 2 != 0){ //player1
+            printf("Payer 1: ");
+            scanf("%d",&input);
+            place(input-1,'X');
+        } else { //player 2
+            printf("Payer 2: ");
+            scanf("%d",&input);
+            place(input-1,'O');
+        }
 
+        paragraph(2);
+        turn++;
     }
-
-    paragraph(2);
 }
